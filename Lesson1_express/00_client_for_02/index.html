@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form id="myForm">
+        <input type="text" name="firstname" placeholder="Enter your first name">
+        <button type="button" onclick="submitForm()">Submit</button>
+    </form>
+
+    <script>
+        async function submitForm() {
+            const form = document.getElementById('myForm');
+            const formData = new FormData(form);
+            const data = { firstname: formData.get("firstname") }; // Capture the input value
+
+            const response = await fetch('http://localhost:3000', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (response.ok) {
+                let data = await response.json()
+                console.log(data);
+            } else {
+                console.log('Failed to submit form');
+            }
+        }
+    </script>
+</body>
+
+</html>
